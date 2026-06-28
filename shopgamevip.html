@@ -1,0 +1,1016 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--surface-0);color:var(--text-primary);min-height:100vh}
+.hidden{display:none!important}
+.btn{padding:8px 16px;border-radius:var(--radius);border:0.5px solid var(--border-strong);background:var(--surface-2);color:var(--text-primary);cursor:pointer;font-size:13px;font-weight:500;transition:.15s}
+.btn:hover{background:var(--surface-1)}
+.btn-primary{background:#1a56db;color:#fff;border-color:#1a56db}
+.btn-primary:hover{background:#1447b2}
+.btn-danger{background:#e11d48;color:#fff;border-color:#e11d48}
+.btn-danger:hover{background:#be123c}
+.btn-success{background:#059669;color:#fff;border-color:#059669}
+.btn-success:hover{background:#047857}
+.btn-sm{padding:5px 10px;font-size:12px}
+input,select,textarea{width:100%;padding:8px 12px;border:0.5px solid var(--border-strong);border-radius:var(--radius);background:var(--surface-2);color:var(--text-primary);font-size:13px;outline:none}
+input:focus,select:focus{border-color:#1a56db}
+.card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:1rem}
+.badge{display:inline-block;padding:2px 8px;border-radius:var(--radius);font-size:11px;font-weight:500}
+.badge-blue{background:#dbeafe;color:#1e40af}
+.badge-green{background:#d1fae5;color:#065f46}
+.badge-red{background:#fee2e2;color:#991b1b}
+.badge-yellow{background:#fef3c7;color:#92400e}
+.badge-purple{background:#ede9fe;color:#5b21b6}
+.tab-btn{padding:8px 16px;border:none;background:none;cursor:pointer;font-size:13px;color:var(--text-secondary);border-bottom:2px solid transparent;transition:.15s}
+.tab-btn.active{color:#1a56db;border-color:#1a56db;font-weight:500}
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:100;min-height:600px}
+.modal{background:var(--surface-2);border-radius:12px;padding:1.5rem;width:90%;max-width:420px;max-height:85vh;overflow-y:auto}
+.modal h3{font-size:16px;font-weight:500;margin-bottom:1rem}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:12px;color:var(--text-secondary);margin-bottom:4px}
+.alert{padding:10px 12px;border-radius:var(--radius);font-size:13px;margin-bottom:12px}
+.alert-success{background:#d1fae5;color:#065f46}
+.alert-error{background:#fee2e2;color:#991b1b}
+.alert-info{background:#dbeafe;color:#1e40af}
+.product-card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;transition:.15s}
+.product-card:hover{border-color:var(--border-strong)}
+.product-img{width:100%;height:120px;object-fit:cover;background:linear-gradient(135deg,#1e40af,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px}
+.nav{background:#0f172a;color:#fff;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:50}
+.nav-brand{font-size:16px;font-weight:600;color:#60a5fa;letter-spacing:.5px}
+.nav-user{display:flex;align-items:center;gap:8px;font-size:13px}
+.sidebar{background:var(--surface-2);border-right:0.5px solid var(--border);padding:1rem;width:200px;min-height:calc(100vh - 52px);flex-shrink:0}
+.sidebar-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text-secondary);margin-bottom:2px;transition:.15s}
+.sidebar-item:hover,.sidebar-item.active{background:var(--surface-1);color:var(--text-primary)}
+.sidebar-item.active{color:#1a56db;font-weight:500}
+.content{flex:1;padding:1.25rem;overflow-y:auto;max-height:calc(100vh - 52px)}
+.stat-card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:1rem}
+.stat-num{font-size:22px;font-weight:500;margin-top:4px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;border-bottom:0.5px solid var(--border-strong);color:var(--text-secondary);font-weight:500;font-size:12px}
+td{padding:8px 12px;border-bottom:0.5px solid var(--border)}
+.search-bar{display:flex;gap:8px;margin-bottom:1rem}
+.toast{position:fixed;top:16px;right:16px;background:#1e293b;color:#fff;padding:10px 16px;border-radius:var(--radius);font-size:13px;z-index:999;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.balance-chip{background:#1e40af;color:#fff;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:500}
+.qr-box{border:2px dashed var(--border-strong);border-radius:12px;padding:1.5rem;text-align:center;background:var(--surface-1)}
+.copy-btn{background:none;border:0.5px solid var(--border-strong);border-radius:var(--radius);padding:3px 8px;font-size:11px;cursor:pointer;color:var(--text-secondary)}
+.copy-btn:hover{background:var(--surface-1)}
+.page{display:none}
+.page.active{display:block}
+</style>
+
+<div id="app" style="min-height:600px;position:relative">
+
+<div id="login-screen" style="display:flex;align-items:center;justify-content:center;min-height:600px;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)">
+  <div style="background:var(--surface-2);border-radius:16px;padding:2rem;width:340px;border:0.5px solid var(--border)">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:28px;font-weight:700;color:#60a5fa;letter-spacing:1px">🎮 ShopGameVip</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">Shop game uy tín số 1</div>
+    </div>
+    <div id="auth-tabs" style="display:flex;border-bottom:0.5px solid var(--border);margin-bottom:1.25rem">
+      <button class="tab-btn active" onclick="switchAuthTab('login')">Đăng nhập</button>
+      <button class="tab-btn" onclick="switchAuthTab('register')">Đăng ký</button>
+    </div>
+    <div id="tab-login">
+      <div class="form-group"><label>Tên đăng nhập</label><input id="login-user" type="text" placeholder="Nhập tên tài khoản"/></div>
+      <div class="form-group"><label>Mật khẩu</label><input id="login-pass" type="password" placeholder="Nhập mật khẩu"/></div>
+      <div id="login-err" style="display:none" class="alert alert-error"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="doLogin()">Đăng nhập</button>
+      <div style="text-align:center;margin-top:10px"><a href="#" onclick="showModal('forgot-pw-modal')" style="font-size:12px;color:#60a5fa;text-decoration:none">Quên mật khẩu?</a></div>
+      <div style="margin-top:1rem;padding:10px;background:var(--surface-1);border-radius:8px;font-size:11px;color:var(--text-secondary)">
+        <div>🔑 Admin: <b>admin</b> / <b>admin123</b></div>
+        <div style="margin-top:4px">👤 User demo: <b>user1</b> / <b>123456</b></div>
+      </div>
+    </div>
+    <div id="tab-register" style="display:none">
+      <div class="form-group"><label>Tên đăng nhập</label><input id="reg-user" type="text" placeholder="Tối thiểu 4 ký tự"/></div>
+      <div class="form-group"><label>Email</label><input id="reg-email" type="email" placeholder="email@gmail.com"/></div>
+      <div class="form-group"><label>Mật khẩu</label><input id="reg-pass" type="password" placeholder="Tối thiểu 6 ký tự"/></div>
+      <div class="form-group"><label>Xác nhận mật khẩu</label><input id="reg-pass2" type="password" placeholder="Nhập lại mật khẩu"/></div>
+      <div id="reg-err" style="display:none" class="alert alert-error"></div>
+      <div id="reg-ok" style="display:none" class="alert alert-success"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="doRegister()">Tạo tài khoản</button>
+    </div>
+  </div>
+</div>
+
+<div id="main-screen" style="display:none">
+  <nav class="nav">
+    <div class="nav-brand">🎮 ShopGameVip</div>
+    <div class="nav-user">
+      <span id="nav-balance" class="balance-chip">💰 0đ</span>
+      <span id="nav-role-badge" class="badge badge-blue" style="display:none"></span>
+      <span id="nav-username" style="font-size:13px;color:#94a3b8"></span>
+      <button class="btn btn-sm" onclick="doLogout()" style="background:transparent;color:#94a3b8;border-color:#334155">Đăng xuất</button>
+    </div>
+  </nav>
+  <div style="display:flex">
+    <div class="sidebar">
+      <div class="sidebar-item active" onclick="showPage('shop')" id="sb-shop"><i class="ti ti-shopping-cart"></i> Cửa hàng</div>
+      <div class="sidebar-item" onclick="showPage('topup')" id="sb-topup"><i class="ti ti-credit-card"></i> Nạp tiền</div>
+      <div class="sidebar-item" onclick="showPage('history')" id="sb-history"><i class="ti ti-history"></i> Lịch sử</div>
+      <div class="sidebar-item" onclick="showPage('myacc')" id="sb-myacc"><i class="ti ti-user"></i> Tài khoản</div>
+      <div class="sidebar-item" onclick="showPage('settings')" id="sb-settings"><i class="ti ti-settings"></i> Cài đặt</div>
+      <div id="admin-menu" style="display:none;margin-top:8px;border-top:0.5px solid var(--border);padding-top:8px">
+        <div style="font-size:11px;color:var(--text-muted);padding:4px 10px;font-weight:500">QUẢN TRỊ</div>
+        <div class="sidebar-item" onclick="showPage('admin-products')" id="sb-admin-products"><i class="ti ti-package"></i> Sản phẩm</div>
+        <div class="sidebar-item" onclick="showPage('admin-users')" id="sb-admin-users"><i class="ti ti-users"></i> Người dùng</div>
+        <div class="sidebar-item" onclick="showPage('admin-orders')" id="sb-admin-orders"><i class="ti ti-list-check"></i> Đơn hàng</div>
+        <div class="sidebar-item" onclick="showPage('admin-topup')" id="sb-admin-topup"><i class="ti ti-coin"></i> Nạp thẻ</div>
+        <div class="sidebar-item" onclick="showPage('admin-promo')" id="sb-admin-promo"><i class="ti ti-ticket"></i> Mã KM</div>
+        <div class="sidebar-item" onclick="showPage('admin-settings')" id="sb-admin-settings"><i class="ti ti-adjustments"></i> Shop</div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- SHOP PAGE -->
+      <div class="page active" id="page-shop">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h2 style="font-size:18px;font-weight:500">Cửa hàng</h2>
+          <div class="search-bar" style="margin:0">
+            <input id="search-input" placeholder="Tìm sản phẩm..." style="width:200px" oninput="renderShop()"/>
+            <select id="cat-filter" style="width:120px" onchange="renderShop()">
+              <option value="">Tất cả</option>
+              <option value="game">Game</option>
+              <option value="acc">Tài khoản</option>
+              <option value="card">Thẻ game</option>
+              <option value="item">Vật phẩm</option>
+            </select>
+          </div>
+        </div>
+        <div id="shop-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px"></div>
+      </div>
+
+      <!-- TOPUP PAGE -->
+      <div class="page" id="page-topup">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Nạp tiền</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem;color:#1a56db"><i class="ti ti-qrcode"></i> Chuyển khoản ngân hàng</h3>
+            <div id="qr-display" class="qr-box" style="margin-bottom:1rem">
+              <div style="font-size:48px;margin-bottom:8px">📱</div>
+              <div style="font-size:13px;font-weight:500" id="qr-bank-name">MB Bank</div>
+              <div style="font-size:12px;color:var(--text-secondary)" id="qr-account">STK: 0123456789</div>
+              <div style="font-size:12px;color:var(--text-secondary)" id="qr-holder">Chủ TK: QUÝ</div>
+              <div style="margin-top:8px;font-size:11px;color:#059669">Nội dung: <b id="qr-content-display">NAP [tên user]</b></div>
+            </div>
+            <div class="form-group"><label>Số tiền nạp (VNĐ)</label><input id="topup-amount" type="number" placeholder="50000" min="10000" step="10000"/></div>
+            <div class="form-group"><label>Mã khuyến mãi (nếu có)</label><input id="topup-promo" type="text" placeholder="Nhập mã KM"/></div>
+            <div id="topup-info" style="display:none;padding:8px;background:var(--surface-1);border-radius:8px;font-size:12px;margin-bottom:8px"></div>
+            <button class="btn btn-primary" style="width:100%" onclick="submitTopup()">Gửi yêu cầu nạp</button>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem;color:#059669"><i class="ti ti-credit-card"></i> Nạp thẻ cào</h3>
+            <div class="form-group"><label>Nhà mạng</label>
+              <select id="card-carrier"><option>Viettel</option><option>Vinaphone</option><option>Mobifone</option></select>
+            </div>
+            <div class="form-group"><label>Mệnh giá</label>
+              <select id="card-value"><option value="10000">10,000đ</option><option value="20000">20,000đ</option><option value="50000">50,000đ</option><option value="100000">100,000đ</option><option value="200000">200,000đ</option><option value="500000">500,000đ</option></select>
+            </div>
+            <div class="form-group"><label>Sê-ri thẻ</label><input id="card-serial" placeholder="Nhập sê-ri thẻ"/></div>
+            <div class="form-group"><label>Mã thẻ</label><input id="card-code" placeholder="Nhập mã thẻ"/></div>
+            <button class="btn btn-success" style="width:100%;margin-top:8px" onclick="submitCard()">Nạp thẻ</button>
+            <div style="margin-top:12px;padding:10px;background:var(--surface-1);border-radius:8px;font-size:12px;color:var(--text-secondary)">
+              <div><b>Lưu ý:</b> Thẻ sẽ được xử lý trong 5-15 phút.</div>
+              <div style="margin-top:4px">Phí nạp thẻ: <b style="color:#e11d48">10%</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY PAGE -->
+      <div class="page" id="page-history">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Lịch sử</h2>
+        <div style="display:flex;gap:8px;margin-bottom:1rem">
+          <button class="tab-btn active" onclick="switchHistTab('buy',this)" id="ht-buy">Lịch sử mua</button>
+          <button class="tab-btn" onclick="switchHistTab('topup',this)" id="ht-topup">Lịch sử nạp</button>
+          <button class="tab-btn" onclick="switchHistTab('acc',this)" id="ht-acc">Tài khoản game đã mua</button>
+        </div>
+        <div id="hist-content"></div>
+      </div>
+
+      <!-- MY ACC PAGE -->
+      <div class="page" id="page-myacc">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Tài khoản của tôi</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Thông tin tài khoản</h3>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+              <div style="width:52px;height:52px;border-radius:50%;background:#1e40af;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:500" id="acc-avatar">U</div>
+              <div>
+                <div style="font-weight:500;font-size:15px" id="acc-name"></div>
+                <div style="font-size:12px;color:var(--text-secondary)" id="acc-email-show"></div>
+                <div id="acc-role-show" class="badge badge-blue" style="margin-top:4px"></div>
+              </div>
+            </div>
+            <div style="background:var(--surface-1);border-radius:8px;padding:12px;margin-bottom:1rem">
+              <div style="font-size:12px;color:var(--text-secondary)">Số dư</div>
+              <div style="font-size:24px;font-weight:500;color:#1a56db" id="acc-balance">0đ</div>
+            </div>
+            <div style="font-size:12px;color:var(--text-secondary)">Ngày tham gia: <span id="acc-joined">-</span></div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Đổi mật khẩu</h3>
+            <div class="form-group"><label>Mật khẩu hiện tại</label><input id="ch-old-pw" type="password" placeholder="Nhập MK hiện tại"/></div>
+            <div class="form-group"><label>Mật khẩu mới</label><input id="ch-new-pw" type="password" placeholder="Tối thiểu 6 ký tự"/></div>
+            <div class="form-group"><label>Xác nhận mật khẩu mới</label><input id="ch-new-pw2" type="password" placeholder="Nhập lại"/></div>
+            <button class="btn btn-primary" style="width:100%" onclick="changePw()">Đổi mật khẩu</button>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Liên kết Gmail</h3>
+            <div class="form-group"><label>Gmail mới</label><input id="ch-email" type="email" placeholder="email@gmail.com"/></div>
+            <button class="btn btn-primary" style="width:100%" onclick="changeEmail()">Cập nhật Gmail</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS PAGE -->
+      <div class="page" id="page-settings">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Cài đặt</h2>
+        <div class="card" style="max-width:400px">
+          <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Quên mật khẩu</h3>
+          <div class="form-group"><label>Email đã liên kết</label><input id="forgot-email" type="email" placeholder="email@gmail.com"/></div>
+          <button class="btn btn-primary" onclick="resetPwByEmail()">Lấy lại mật khẩu</button>
+        </div>
+      </div>
+
+      <!-- ADMIN - PRODUCTS -->
+      <div class="page" id="page-admin-products">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h2 style="font-size:18px;font-weight:500">Quản lý sản phẩm</h2>
+          <button class="btn btn-primary" onclick="showModal('add-product-modal')"><i class="ti ti-plus"></i> Thêm sản phẩm</button>
+        </div>
+        <div class="table-wrap"><table id="products-table">
+          <thead><tr><th>Ảnh</th><th>Tên</th><th>Giá</th><th>Danh mục</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody id="products-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- ADMIN - USERS -->
+      <div class="page" id="page-admin-users">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Quản lý người dùng</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Tên TK</th><th>Email</th><th>Vai trò</th><th>Số dư</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody id="users-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- ADMIN - ORDERS -->
+      <div class="page" id="page-admin-orders">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Quản lý đơn hàng</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Mã đơn</th><th>Người mua</th><th>Sản phẩm</th><th>Giá</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody id="orders-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- ADMIN - TOPUP -->
+      <div class="page" id="page-admin-topup">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Yêu cầu nạp tiền</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Người dùng</th><th>Số tiền</th><th>Loại</th><th>Thời gian</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody id="topup-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- ADMIN - PROMO -->
+      <div class="page" id="page-admin-promo">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h2 style="font-size:18px;font-weight:500">Mã khuyến mãi</h2>
+          <button class="btn btn-primary" onclick="showModal('add-promo-modal')"><i class="ti ti-plus"></i> Tạo mã KM</button>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Mã</th><th>Giảm giá</th><th>Đã dùng</th><th>Giới hạn</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody id="promo-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- ADMIN - SHOP SETTINGS -->
+      <div class="page" id="page-admin-settings">
+        <h2 style="font-size:18px;font-weight:500;margin-bottom:1rem">Cài đặt shop</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Thông tin chuyển khoản</h3>
+            <div class="form-group"><label>Tên ngân hàng</label><input id="set-bank" type="text"/></div>
+            <div class="form-group"><label>Số tài khoản</label><input id="set-stk" type="text"/></div>
+            <div class="form-group"><label>Tên chủ tài khoản</label><input id="set-holder" type="text"/></div>
+            <button class="btn btn-primary" onclick="saveShopSettings()">Lưu cài đặt</button>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Mã QR thanh toán</h3>
+            <div class="form-group"><label>URL ảnh QR (link ảnh)</label><input id="set-qr-url" type="text" placeholder="https://..."/></div>
+            <div id="qr-preview" style="margin-top:8px;text-align:center;display:none">
+              <img id="qr-img" style="max-width:180px;border-radius:8px" alt="QR Code"/>
+            </div>
+            <button class="btn btn-primary" style="margin-top:8px" onclick="saveQR()">Cập nhật QR</button>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;font-weight:500;margin-bottom:1rem">Thêm quản trị viên</h3>
+            <div class="form-group"><label>Tên đăng nhập</label><input id="new-mod-user" type="text" placeholder="Tên tài khoản cần phân quyền"/></div>
+            <button class="btn btn-primary" onclick="addMod()">Phân quyền Mod</button>
+            <div style="margin-top:8px;font-size:12px;color:var(--text-secondary)">Mod có thể duyệt đơn, nạp tiền nhưng không thể đổi admin.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div id="modal-container"></div>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const DB = {
+  users: {
+    admin: {username:'admin',password:'admin123',email:'admin@shopgamevip.com',role:'admin',balance:999999999,banned:false,joined:'2024-01-01',topupHistory:[],buyHistory:[]},
+    user1: {username:'user1',password:'123456',email:'user1@gmail.com',role:'user',balance:150000,banned:false,joined:'2024-06-01',topupHistory:[{id:'T001',amount:150000,type:'bank',status:'approved',time:'2024-06-01 10:00'}],buyHistory:[]}
+  },
+  products: [
+    {id:'P001',name:'Liên Quân VIP',price:50000,category:'game',desc:'Tài khoản Liên Quân rank Cao Thủ, full tướng',img:'⚔️',status:'active',accData:{username:'lq_vip01',password:'Pass@123'}},
+    {id:'P002',name:'Free Fire Kim Cương',price:100000,category:'game',desc:'Acc FF 10000 kim cương, rank Chiến Thần',img:'🔥',status:'active',accData:{username:'ff_dia001',password:'FF@2024'}},
+    {id:'P003',name:'Thẻ Game 100K',price:95000,category:'card',desc:'Thẻ nạp game VTC 100,000đ',img:'🎫',status:'active',accData:null},
+    {id:'P004',name:'PUBG Mobile BP',price:80000,category:'game',desc:'Acc PUBG 50000 BP, skin Conqueror',img:'🎯',status:'active',accData:{username:'pubg_bp01',password:'PUBG#2024'}},
+    {id:'P005',name:'Skin Trang Bị Hiếm',price:200000,category:'item',desc:'Skin AK47 Dragon Fire + Skin nhân vật',img:'🐉',status:'active',accData:null},
+    {id:'P006',name:'Genshin Account AR55',price:350000,category:'acc',desc:'AR55, 15 nhân vật 5 sao, nhiều vũ khí',img:'✨',status:'active',accData:{username:'gi_ar55',password:'Genshin@123'}}
+  ],
+  orders: [],
+  topupRequests: [],
+  promoCodes: [
+    {code:'WELCOME10',discount:10,used:0,limit:100,active:true},
+    {code:'VIP50K',discount:0,bonus:50000,used:2,limit:50,active:true},
+    {code:'NEWUSER',discount:15,used:5,limit:200,active:true}
+  ],
+  shopSettings: {bank:'MB Bank',stk:'0123456789',holder:'QUÝ',qrUrl:''},
+  nextOrderId: 1
+};
+
+let currentUser = null;
+let activeHistTab = 'buy';
+
+function fmt(n){return Number(n).toLocaleString('vi-VN')+'đ'}
+function genId(){return 'ORD'+(DB.nextOrderId++).toString().padStart(4,'0')}
+function now(){return new Date().toLocaleString('vi-VN')}
+
+function toast(msg,type='info'){
+  const t=document.createElement('div');
+  t.className='toast';
+  t.style.background=type==='success'?'#059669':type==='error'?'#e11d48':'#1e293b';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2500);
+}
+
+function showModal(id){
+  const mc=$('modal-container');
+  mc.innerHTML='';
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.onclick=e=>{if(e.target===overlay)closeModal()};
+
+  let html='';
+  if(id==='add-product-modal'){
+    html=`<div class="modal"><h3>Thêm sản phẩm</h3>
+      <div class="form-group"><label>Tên sản phẩm</label><input id="np-name" placeholder="Tên SP"/></div>
+      <div class="form-group"><label>Giá (VNĐ)</label><input id="np-price" type="number" placeholder="50000"/></div>
+      <div class="form-group"><label>Danh mục</label><select id="np-cat"><option value="game">Game</option><option value="acc">Tài khoản</option><option value="card">Thẻ game</option><option value="item">Vật phẩm</option></select></div>
+      <div class="form-group"><label>Mô tả</label><textarea id="np-desc" rows="2" style="resize:none"></textarea></div>
+      <div class="form-group"><label>Icon (emoji)</label><input id="np-img" placeholder="🎮" style="width:80px"/></div>
+      <div style="border-top:0.5px solid var(--border);padding-top:12px;margin-top:4px">
+        <div style="font-size:12px;font-weight:500;margin-bottom:8px;color:var(--text-secondary)">Thông tin tài khoản game (nếu là acc)</div>
+        <div class="form-group"><label>Tên đăng nhập acc game</label><input id="np-acc-user" placeholder="username_game"/></div>
+        <div class="form-group"><label>Mật khẩu acc game</label><input id="np-acc-pass" placeholder="password_game"/></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn" onclick="closeModal()">Hủy</button>
+        <button class="btn btn-primary" onclick="addProduct()">Thêm</button>
+      </div></div>`;
+  } else if(id==='add-promo-modal'){
+    html=`<div class="modal"><h3>Tạo mã khuyến mãi</h3>
+      <div class="form-group"><label>Mã KM</label><input id="np-code" placeholder="VD: SALE20"/></div>
+      <div class="form-group"><label>Loại KM</label><select id="np-promo-type" onchange="togglePromoType()"><option value="pct">Giảm % giá</option><option value="bonus">Cộng tiền thưởng</option></select></div>
+      <div id="promo-pct-field" class="form-group"><label>Giảm (%)</label><input id="np-discount" type="number" placeholder="10" min="1" max="100"/></div>
+      <div id="promo-bonus-field" class="form-group" style="display:none"><label>Tiền thưởng (VNĐ)</label><input id="np-bonus" type="number" placeholder="50000"/></div>
+      <div class="form-group"><label>Giới hạn sử dụng</label><input id="np-limit" type="number" placeholder="100"/></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn" onclick="closeModal()">Hủy</button>
+        <button class="btn btn-primary" onclick="addPromo()">Tạo mã</button>
+      </div></div>`;
+  } else if(id==='edit-product-modal'){
+    html=`<div class="modal" id="edit-product-inner"><h3>Sửa sản phẩm</h3><div id="edit-form-content"></div></div>`;
+  } else if(id==='forgot-pw-modal'){
+    html=`<div class="modal"><h3>Quên mật khẩu</h3>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem">Nhập email liên kết để lấy lại mật khẩu.</p>
+      <div class="form-group"><label>Email</label><input id="fp-email" type="email" placeholder="email@gmail.com"/></div>
+      <div id="fp-result" style="display:none" class="alert alert-info"></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn" onclick="closeModal()">Đóng</button>
+        <button class="btn btn-primary" onclick="fpSubmit()">Gửi</button>
+      </div></div>`;
+  } else if(id==='buy-modal'){
+    html=`<div class="modal" id="buy-modal-inner"></div>`;
+  }
+
+  overlay.innerHTML=html;
+  mc.appendChild(overlay);
+  mc.style.display='block';
+}
+
+function closeModal(){
+  const mc=$('modal-container');
+  mc.innerHTML='';
+  mc.style.display='none';
+}
+
+function togglePromoType(){
+  const t=$('np-promo-type').value;
+  $('promo-pct-field').style.display=t==='pct'?'block':'none';
+  $('promo-bonus-field').style.display=t==='bonus'?'block':'none';
+}
+
+function switchAuthTab(tab){
+  $('tab-login').style.display=tab==='login'?'block':'none';
+  $('tab-register').style.display=tab==='register'?'block':'none';
+  document.querySelectorAll('#auth-tabs .tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active',(tab==='login'&&i===0)||(tab==='register'&&i===1));
+  });
+}
+
+function doLogin(){
+  const u=$('login-user').value.trim();
+  const p=$('login-pass').value;
+  const usr=DB.users[u];
+  const err=$('login-err');
+  if(!usr||usr.password!==p){err.textContent='Sai tên đăng nhập hoặc mật khẩu!';err.style.display='block';return;}
+  if(usr.banned){err.textContent='Tài khoản đã bị khóa!';err.style.display='block';return;}
+  err.style.display='none';
+  currentUser=usr;
+  enterApp();
+}
+
+function doRegister(){
+  const u=$('reg-user').value.trim();
+  const e=$('reg-email').value.trim();
+  const p=$('reg-pass').value;
+  const p2=$('reg-pass2').value;
+  const err=$('reg-err');const ok=$('reg-ok');
+  err.style.display='none';ok.style.display='none';
+  if(u.length<4){err.textContent='Tên đăng nhập tối thiểu 4 ký tự!';err.style.display='block';return;}
+  if(DB.users[u]){err.textContent='Tên đăng nhập đã tồn tại!';err.style.display='block';return;}
+  if(p.length<6){err.textContent='Mật khẩu tối thiểu 6 ký tự!';err.style.display='block';return;}
+  if(p!==p2){err.textContent='Mật khẩu không khớp!';err.style.display='block';return;}
+  if(!e.includes('@')){err.textContent='Email không hợp lệ!';err.style.display='block';return;}
+  DB.users[u]={username:u,password:p,email:e,role:'user',balance:0,banned:false,joined:new Date().toISOString().split('T')[0],topupHistory:[],buyHistory:[]};
+  ok.textContent='Tạo tài khoản thành công! Hãy đăng nhập.';ok.style.display='block';
+  setTimeout(()=>switchAuthTab('login'),1500);
+}
+
+function doLogout(){
+  currentUser=null;
+  $('login-user').value='';$('login-pass').value='';
+  $('login-err').style.display='none';
+  $('login-screen').style.display='flex';
+  $('main-screen').style.display='none';
+}
+
+function enterApp(){
+  $('login-screen').style.display='none';
+  $('main-screen').style.display='block';
+  updateNavBar();
+  const isAdmin=currentUser.role==='admin';
+  const isMod=currentUser.role==='mod'||isAdmin;
+  $('admin-menu').style.display=isMod?'block':'none';
+  showPage('shop');
+  renderShop();
+}
+
+function updateNavBar(){
+  $('nav-username').textContent=currentUser.username;
+  $('nav-balance').textContent='💰 '+fmt(currentUser.balance);
+  const rb=$('nav-role-badge');
+  if(currentUser.role==='admin'){rb.textContent='ADMIN';rb.className='badge badge-red';rb.style.display='inline';}
+  else if(currentUser.role==='mod'){rb.textContent='MOD';rb.className='badge badge-purple';rb.style.display='inline';}
+  else rb.style.display='none';
+}
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+  const pg=$('page-'+p);
+  if(pg)pg.classList.add('active');
+  const sb=$('sb-'+p);
+  if(sb)sb.classList.add('active');
+  if(p==='history')renderHistory(activeHistTab);
+  if(p==='admin-products')renderProductsTable();
+  if(p==='admin-users')renderUsersTable();
+  if(p==='admin-orders')renderOrdersTable();
+  if(p==='admin-topup')renderTopupTable();
+  if(p==='admin-promo')renderPromoTable();
+  if(p==='admin-settings')loadShopSettings();
+  if(p==='myacc')loadMyAcc();
+}
+
+function renderShop(){
+  const q=($('search-input').value||'').toLowerCase();
+  const cat=$('cat-filter').value;
+  const grid=$('shop-grid');
+  const filtered=DB.products.filter(pr=>pr.status==='active'&&(!cat||pr.category===cat)&&(!q||pr.name.toLowerCase().includes(q)||pr.desc.toLowerCase().includes(q)));
+  if(!filtered.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-secondary)">Không tìm thấy sản phẩm nào.</div>';return;}
+  grid.innerHTML=filtered.map(pr=>`
+    <div class="product-card">
+      <div class="product-img">${pr.img}</div>
+      <div style="padding:10px">
+        <div style="font-weight:500;font-size:13px;margin-bottom:4px">${pr.name}</div>
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:8px;min-height:32px">${pr.desc}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font-weight:500;color:#1a56db;font-size:14px">${fmt(pr.price)}</div>
+          <span class="badge badge-${pr.category==='game'?'blue':pr.category==='acc'?'purple':pr.category==='card'?'green':'yellow'}">${pr.category}</span>
+        </div>
+        <button class="btn btn-primary btn-sm" style="width:100%;margin-top:8px" onclick="buyProduct('${pr.id}')">Mua ngay</button>
+      </div>
+    </div>`).join('');
+}
+
+function buyProduct(pid){
+  const pr=DB.products.find(p=>p.id===pid);
+  if(!pr)return;
+  showModal('buy-modal');
+  setTimeout(()=>{
+    const inner=$('buy-modal-inner');
+    if(!inner)return;
+    inner.innerHTML=`<h3>Xác nhận mua hàng</h3>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;background:var(--surface-1);padding:12px;border-radius:8px">
+        <div style="font-size:32px">${pr.img}</div>
+        <div><div style="font-weight:500">${pr.name}</div><div style="font-size:12px;color:var(--text-secondary)">${pr.desc}</div></div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Giá sản phẩm:</span><span style="font-weight:500">${fmt(pr.price)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Số dư của bạn:</span><span style="font-weight:500;color:#059669">${fmt(currentUser.balance)}</span></div>
+      </div>
+      <div class="form-group"><label>Mã khuyến mãi (nếu có)</label>
+        <div style="display:flex;gap:8px"><input id="buy-promo" placeholder="Nhập mã KM"/><button class="btn btn-sm" onclick="applyBuyPromo('${pid}')">Áp dụng</button></div>
+      </div>
+      <div id="buy-promo-info" style="display:none;padding:8px;background:var(--bg-success);color:var(--text-success);border-radius:8px;font-size:12px;margin-bottom:8px"></div>
+      <div id="buy-final-price" style="font-size:16px;font-weight:500;text-align:right;margin-bottom:1rem">Tổng: <span style="color:#1a56db">${fmt(pr.price)}</span></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn" onclick="closeModal()">Hủy</button>
+        <button class="btn btn-success" onclick="confirmBuy('${pid}')">Xác nhận mua</button>
+      </div>`;
+  },50);
+}
+
+let activeBuyPromo=null;
+function applyBuyPromo(pid){
+  const pr=DB.products.find(p=>p.id===pid);
+  const code=($('buy-promo').value||'').toUpperCase().trim();
+  const promo=DB.promoCodes.find(c=>c.code===code&&c.active&&c.used<c.limit);
+  const info=$('buy-promo-info');const fp=$('buy-final-price');
+  if(!promo){info.style.display='block';info.style.background='var(--bg-danger)';info.style.color='var(--text-danger)';info.textContent='Mã không hợp lệ hoặc đã hết lượt!';activeBuyPromo=null;fp.innerHTML='Tổng: <span style="color:#1a56db">'+fmt(pr.price)+'</span>';return;}
+  activeBuyPromo=promo;
+  let finalPrice=pr.price;
+  if(promo.discount)finalPrice=Math.round(pr.price*(1-promo.discount/100));
+  info.style.display='block';info.style.background='var(--bg-success)';info.style.color='var(--text-success)';
+  info.textContent=promo.discount?`Áp dụng thành công! Giảm ${promo.discount}%`:`Áp dụng thành công! Nhận thưởng ${fmt(promo.bonus)}`;
+  fp.innerHTML='Tổng: <span style="color:#1a56db">'+fmt(finalPrice)+'</span>';
+}
+
+function confirmBuy(pid){
+  const pr=DB.products.find(p=>p.id===pid);
+  let finalPrice=pr.price;
+  let bonusAmount=0;
+  if(activeBuyPromo){
+    if(activeBuyPromo.discount)finalPrice=Math.round(pr.price*(1-activeBuyPromo.discount/100));
+    if(activeBuyPromo.bonus)bonusAmount=activeBuyPromo.bonus;
+    activeBuyPromo.used++;
+  }
+  if(currentUser.balance<finalPrice){toast('Số dư không đủ! Vui lòng nạp thêm tiền.','error');closeModal();return;}
+  currentUser.balance-=finalPrice;
+  if(bonusAmount)currentUser.balance+=bonusAmount;
+  const order={id:genId(),userId:currentUser.username,productId:pr.id,productName:pr.name,price:finalPrice,status:'completed',time:now(),accData:pr.accData,processingTime:'2 phút'};
+  DB.orders.unshift(order);
+  currentUser.buyHistory.unshift({...order});
+  activeBuyPromo=null;
+  updateNavBar();
+  closeModal();
+  toast('Mua hàng thành công! Kiểm tra lịch sử để xem chi tiết.','success');
+  showBuyResult(order,pr);
+}
+
+function showBuyResult(order,pr){
+  showModal('buy-modal');
+  setTimeout(()=>{
+    const inner=$('buy-modal-inner');
+    if(!inner)return;
+    let accHtml='';
+    if(order.accData){
+      accHtml=`<div style="background:var(--surface-1);border-radius:8px;padding:12px;margin-top:12px">
+        <div style="font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">THÔNG TIN TÀI KHOẢN GAME</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:12px;color:var(--text-secondary)">Tên đăng nhập:</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <code style="font-size:13px;font-weight:500;background:var(--surface-0);padding:2px 8px;border-radius:4px">${order.accData.username}</code>
+            <button class="copy-btn" onclick="copyText('${order.accData.username}')"><i class="ti ti-copy"></i> Sao chép</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;color:var(--text-secondary)">Mật khẩu:</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <code style="font-size:13px;font-weight:500;background:var(--surface-0);padding:2px 8px;border-radius:4px">${order.accData.password}</code>
+            <button class="copy-btn" onclick="copyText('${order.accData.password}')"><i class="ti ti-copy"></i> Sao chép</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    inner.innerHTML=`
+      <div style="text-align:center;margin-bottom:1rem">
+        <div style="font-size:40px;margin-bottom:8px">✅</div>
+        <h3 style="margin-bottom:4px">Mua hàng thành công!</h3>
+        <div style="font-size:12px;color:var(--text-secondary)">Mã đơn: ${order.id} | Thời gian xử lý: ${order.processingTime}</div>
+      </div>
+      <div style="background:var(--surface-1);border-radius:8px;padding:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+          <span>Sản phẩm:</span><span style="font-weight:500">${pr.name}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px">
+          <span>Đã thanh toán:</span><span style="font-weight:500;color:#e11d48">${fmt(order.price)}</span>
+        </div>
+      </div>
+      ${accHtml}
+      <button class="btn" style="width:100%;margin-top:1rem" onclick="closeModal()">Đóng</button>`;
+  },50);
+}
+
+function copyText(t){navigator.clipboard.writeText(t).then(()=>toast('Đã sao chép!','success'));}
+
+function submitTopup(){
+  const amt=parseInt($('topup-amount').value)||0;
+  const promoCode=($('topup-promo').value||'').toUpperCase().trim();
+  if(amt<10000){toast('Số tiền nạp tối thiểu 10,000đ','error');return;}
+  let bonus=0;
+  if(promoCode){
+    const promo=DB.promoCodes.find(c=>c.code===promoCode&&c.active&&c.used<c.limit);
+    if(promo&&promo.bonus)bonus=promo.bonus;
+  }
+  const req={id:'NP'+(DB.topupRequests.length+1).toString().padStart(4,'0'),userId:currentUser.username,amount:amt,bonus,type:'bank',status:'pending',time:now()};
+  DB.topupRequests.unshift(req);
+  currentUser.topupHistory.unshift({...req});
+  toast('Gửi yêu cầu thành công! Chờ admin duyệt trong 5-15 phút.','success');
+  $('topup-amount').value='';$('topup-promo').value='';
+}
+
+function submitCard(){
+  const val=parseInt($('card-value').value)||0;
+  const carrier=$('card-carrier').value;
+  const serial=$('card-serial').value.trim();
+  const code=$('card-code').value.trim();
+  if(!serial||!code){toast('Vui lòng nhập sê-ri và mã thẻ!','error');return;}
+  const realAmt=Math.round(val*0.9);
+  const req={id:'TC'+(DB.topupRequests.length+1).toString().padStart(4,'0'),userId:currentUser.username,amount:realAmt,type:'card',carrier,serial,cardCode:code,faceValue:val,status:'pending',time:now()};
+  DB.topupRequests.unshift(req);
+  currentUser.topupHistory.unshift({...req});
+  toast(`Đã nhận thẻ ${carrier} ${fmt(val)}. Thực nhận ${fmt(realAmt)} sau khi trừ phí. Đợi xử lý 5-15 phút.`,'success');
+  $('card-serial').value='';$('card-code').value='';
+}
+
+function switchHistTab(tab,btn){
+  activeHistTab=tab;
+  document.querySelectorAll('#page-history .tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  renderHistory(tab);
+}
+
+function renderHistory(tab){
+  const c=$('hist-content');if(!c)return;
+  if(tab==='buy'){
+    const orders=currentUser.buyHistory;
+    if(!orders.length){c.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-secondary)">Chưa có đơn hàng nào.</div>';return;}
+    c.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Mã đơn</th><th>Sản phẩm</th><th>Giá</th><th>Thời gian</th><th>Trạng thái</th></tr></thead><tbody>${orders.map(o=>`<tr><td><code style="font-size:12px">${o.id}</code></td><td>${o.productName}</td><td style="font-weight:500">${fmt(o.price)}</td><td style="font-size:12px;color:var(--text-secondary)">${o.time}</td><td><span class="badge badge-green">Hoàn thành</span></td></tr>`).join('')}</tbody></table></div>`;
+  } else if(tab==='topup'){
+    const recs=currentUser.topupHistory;
+    if(!recs.length){c.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-secondary)">Chưa có lịch sử nạp tiền.</div>';return;}
+    c.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Mã GD</th><th>Số tiền</th><th>Loại</th><th>Thời gian</th><th>Trạng thái</th></tr></thead><tbody>${recs.map(r=>`<tr><td><code style="font-size:12px">${r.id}</code></td><td style="font-weight:500">${fmt(r.amount)}</td><td>${r.type==='bank'?'Chuyển khoản':'Thẻ cào'}</td><td style="font-size:12px;color:var(--text-secondary)">${r.time}</td><td><span class="badge ${r.status==='approved'?'badge-green':r.status==='pending'?'badge-yellow':'badge-red'}">${r.status==='approved'?'Đã duyệt':r.status==='pending'?'Đang xử lý':'Từ chối'}</span></td></tr>`).join('')}</tbody></table></div>`;
+  } else if(tab==='acc'){
+    const accOrders=currentUser.buyHistory.filter(o=>o.accData);
+    if(!accOrders.length){c.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-secondary)">Chưa mua tài khoản game nào.</div>';return;}
+    c.innerHTML=`<div style="display:grid;gap:8px">${accOrders.map(o=>`
+      <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+        <div><div style="font-weight:500;font-size:13px">${o.productName}</div><div style="font-size:12px;color:var(--text-secondary)">${o.time}</div></div>
+        <span style="font-weight:500;color:#1a56db">${fmt(o.price)}</span>
+      </div>
+      <div style="background:var(--surface-1);border-radius:8px;padding:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:12px;color:var(--text-secondary)">Tên TK:</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <code style="font-size:12px;background:var(--surface-0);padding:2px 6px;border-radius:4px">${o.accData.username}</code>
+            <button class="copy-btn" onclick="copyText('${o.accData.username}')"><i class="ti ti-copy"></i></button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;color:var(--text-secondary)">Mật khẩu:</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <code style="font-size:12px;background:var(--surface-0);padding:2px 6px;border-radius:4px">${o.accData.password}</code>
+            <button class="copy-btn" onclick="copyText('${o.accData.password}')"><i class="ti ti-copy"></i></button>
+          </div>
+        </div>
+      </div></div>`).join('')}</div>`;
+  }
+}
+
+function renderProductsTable(){
+  const tb=$('products-tbody');if(!tb)return;
+  tb.innerHTML=DB.products.map(pr=>`<tr>
+    <td style="font-size:24px">${pr.img}</td>
+    <td style="font-weight:500">${pr.name}</td>
+    <td>${fmt(pr.price)}</td>
+    <td><span class="badge badge-blue">${pr.category}</span></td>
+    <td><span class="badge ${pr.status==='active'?'badge-green':'badge-red'}">${pr.status==='active'?'Hoạt động':'Ẩn'}</span></td>
+    <td style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-sm" onclick="editProduct('${pr.id}')"><i class="ti ti-edit"></i> Sửa</button>
+      <button class="btn btn-sm ${pr.status==='active'?'btn-danger':''}" onclick="toggleProduct('${pr.id}')">${pr.status==='active'?'Ẩn':'Hiện'}</button>
+    </td>
+  </tr>`).join('');
+}
+
+function editProduct(pid){
+  const pr=DB.products.find(p=>p.id===pid);
+  showModal('edit-product-modal');
+  setTimeout(()=>{
+    const c=$('edit-form-content');if(!c)return;
+    c.innerHTML=`
+      <div class="form-group"><label>Tên sản phẩm</label><input id="ep-name" value="${pr.name}"/></div>
+      <div class="form-group"><label>Giá (VNĐ)</label><input id="ep-price" type="number" value="${pr.price}"/></div>
+      <div class="form-group"><label>Danh mục</label><select id="ep-cat">
+        <option value="game"${pr.category==='game'?' selected':''}>Game</option>
+        <option value="acc"${pr.category==='acc'?' selected':''}>Tài khoản</option>
+        <option value="card"${pr.category==='card'?' selected':''}>Thẻ game</option>
+        <option value="item"${pr.category==='item'?' selected':''}>Vật phẩm</option>
+      </select></div>
+      <div class="form-group"><label>Mô tả</label><textarea id="ep-desc" rows="2" style="resize:none">${pr.desc}</textarea></div>
+      <div class="form-group"><label>Icon (emoji)</label><input id="ep-img" value="${pr.img}" style="width:80px"/></div>
+      ${pr.accData?`<div style="border-top:0.5px solid var(--border);padding-top:12px;margin-top:4px">
+        <div style="font-size:12px;font-weight:500;margin-bottom:8px;color:var(--text-secondary)">Thông tin tài khoản game</div>
+        <div class="form-group"><label>Tên đăng nhập acc game</label><input id="ep-acc-user" value="${pr.accData.username}"/></div>
+        <div class="form-group"><label>Mật khẩu acc game</label><input id="ep-acc-pass" value="${pr.accData.password}"/></div>
+      </div>`:''}
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn" onclick="closeModal()">Hủy</button>
+        <button class="btn btn-primary" onclick="saveProduct('${pid}')">Lưu</button>
+      </div>`;
+  },50);
+}
+
+function saveProduct(pid){
+  const pr=DB.products.find(p=>p.id===pid);
+  pr.name=$('ep-name').value;
+  pr.price=parseInt($('ep-price').value)||pr.price;
+  pr.category=$('ep-cat').value;
+  pr.desc=$('ep-desc').value;
+  pr.img=$('ep-img').value||pr.img;
+  if(pr.accData&&$('ep-acc-user')){
+    pr.accData.username=$('ep-acc-user').value;
+    pr.accData.password=$('ep-acc-pass').value;
+  }
+  closeModal();renderProductsTable();renderShop();
+  toast('Cập nhật sản phẩm thành công!','success');
+}
+
+function toggleProduct(pid){
+  const pr=DB.products.find(p=>p.id===pid);
+  pr.status=pr.status==='active'?'hidden':'active';
+  renderProductsTable();renderShop();
+  toast(pr.status==='active'?'Đã hiện sản phẩm':'Đã ẩn sản phẩm','success');
+}
+
+function addProduct(){
+  const name=$('np-name').value.trim();
+  const price=parseInt($('np-price').value)||0;
+  const cat=$('np-cat').value;
+  const desc=$('np-desc').value.trim();
+  const img=$('np-img').value||'🎮';
+  const accUser=$('np-acc-user').value.trim();
+  const accPass=$('np-acc-pass').value.trim();
+  if(!name||!price){toast('Vui lòng nhập đủ thông tin!','error');return;}
+  const id='P'+(DB.products.length+1).toString().padStart(3,'0');
+  DB.products.push({id,name,price,category:cat,desc,img,status:'active',accData:accUser?{username:accUser,password:accPass}:null});
+  closeModal();renderProductsTable();renderShop();
+  toast('Thêm sản phẩm thành công!','success');
+}
+
+function renderUsersTable(){
+  const tb=$('users-tbody');if(!tb)return;
+  const isSuperAdmin=currentUser.username==='admin';
+  tb.innerHTML=Object.values(DB.users).map(u=>`<tr>
+    <td style="font-weight:500">${u.username}</td>
+    <td style="font-size:12px;color:var(--text-secondary)">${u.email}</td>
+    <td><span class="badge ${u.role==='admin'?'badge-red':u.role==='mod'?'badge-purple':'badge-blue'}">${u.role==='admin'?'Admin':u.role==='mod'?'Mod':'User'}</span></td>
+    <td style="font-weight:500">${fmt(u.balance)}</td>
+    <td><span class="badge ${u.banned?'badge-red':'badge-green'}">${u.banned?'Đã khóa':'Hoạt động'}</span></td>
+    <td style="display:flex;gap:6px;flex-wrap:wrap">
+      ${u.username===currentUser.username?'<span style="font-size:11px;color:var(--text-secondary)">Tài khoản của bạn</span>':`
+        <button class="btn btn-sm" onclick="addBalance('${u.username}')"><i class="ti ti-plus"></i> Thêm tiền</button>
+        ${u.role!=='admin'?`<button class="btn btn-sm ${u.banned?'':'btn-danger'}" onclick="toggleBan('${u.username}')">${u.banned?'Bỏ khóa':'Khóa TK'}</button>`:''}
+      `}
+    </td>
+  </tr>`).join('');
+}
+
+function toggleBan(uname){
+  const u=DB.users[uname];
+  if(u.role==='admin'){toast('Không thể khóa tài khoản admin!','error');return;}
+  u.banned=!u.banned;
+  renderUsersTable();
+  toast(u.banned?`Đã khóa tài khoản ${uname}`:`Đã mở khóa ${uname}`,'success');
+}
+
+function addBalance(uname){
+  const amt=prompt('Nhập số tiền cần cộng (VNĐ):');
+  const n=parseInt(amt)||0;
+  if(!n||n<=0){toast('Số tiền không hợp lệ!','error');return;}
+  DB.users[uname].balance+=n;
+  if(currentUser.username===uname)updateNavBar();
+  renderUsersTable();
+  toast(`Đã cộng ${fmt(n)} cho ${uname}`,'success');
+}
+
+function renderOrdersTable(){
+  const tb=$('orders-tbody');if(!tb)return;
+  if(!DB.orders.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-secondary)">Chưa có đơn hàng nào.</td></tr>';return;}
+  tb.innerHTML=DB.orders.map(o=>`<tr>
+    <td><code style="font-size:12px">${o.id}</code></td>
+    <td>${o.userId}</td>
+    <td style="font-size:12px">${o.productName}</td>
+    <td style="font-weight:500">${fmt(o.price)}</td>
+    <td><span class="badge badge-green">Hoàn thành</span></td>
+    <td style="font-size:12px;color:var(--text-secondary)">${o.time}</td>
+  </tr>`).join('');
+}
+
+function renderTopupTable(){
+  const tb=$('topup-tbody');if(!tb)return;
+  if(!DB.topupRequests.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-secondary)">Chưa có yêu cầu nạp nào.</td></tr>';return;}
+  tb.innerHTML=DB.topupRequests.map(r=>`<tr>
+    <td style="font-weight:500">${r.userId}</td>
+    <td>${fmt(r.amount)}</td>
+    <td><span class="badge badge-blue">${r.type==='bank'?'Chuyển khoản':'Thẻ '+r.carrier||''}</span></td>
+    <td style="font-size:12px;color:var(--text-secondary)">${r.time}</td>
+    <td><span class="badge ${r.status==='approved'?'badge-green':r.status==='pending'?'badge-yellow':'badge-red'}">${r.status==='approved'?'Đã duyệt':r.status==='pending'?'Đang xử lý':'Từ chối'}</span></td>
+    <td style="display:flex;gap:6px">
+      ${r.status==='pending'?`
+        <button class="btn btn-sm btn-success" onclick="approveTopup('${r.id}')">Duyệt</button>
+        <button class="btn btn-sm btn-danger" onclick="rejectTopup('${r.id}')">Từ chối</button>
+      `:'-'}
+    </td>
+  </tr>`).join('');
+}
+
+function approveTopup(id){
+  const req=DB.topupRequests.find(r=>r.id===id);
+  if(!req||req.status!=='pending')return;
+  req.status='approved';
+  const u=DB.users[req.userId];
+  if(u){
+    u.balance+=req.amount+(req.bonus||0);
+    const hr=u.topupHistory.find(h=>h.id===id);
+    if(hr)hr.status='approved';
+    if(currentUser.username===req.userId)updateNavBar();
+  }
+  renderTopupTable();
+  toast(`Đã duyệt nạp ${fmt(req.amount)} cho ${req.userId}`,'success');
+}
+
+function rejectTopup(id){
+  const req=DB.topupRequests.find(r=>r.id===id);
+  if(!req)return;
+  req.status='rejected';
+  const u=DB.users[req.userId];
+  if(u){const hr=u.topupHistory.find(h=>h.id===id);if(hr)hr.status='rejected';}
+  renderTopupTable();
+  toast('Đã từ chối yêu cầu nạp tiền','success');
+}
+
+function renderPromoTable(){
+  const tb=$('promo-tbody');if(!tb)return;
+  tb.innerHTML=DB.promoCodes.map(p=>`<tr>
+    <td><code style="font-size:13px;font-weight:600">${p.code}</code>
+      <button class="copy-btn" style="margin-left:6px" onclick="copyText('${p.code}')"><i class="ti ti-copy"></i></button></td>
+    <td>${p.discount?p.discount+'%':fmt(p.bonus||0)+' thưởng'}</td>
+    <td>${p.used}</td>
+    <td>${p.limit}</td>
+    <td><span class="badge ${p.active?'badge-green':'badge-red'}">${p.active?'Hoạt động':'Tắt'}</span></td>
+    <td>
+      <button class="btn btn-sm ${p.active?'btn-danger':''}" onclick="togglePromo('${p.code}')">${p.active?'Tắt':'Bật'}</button>
+    </td>
+  </tr>`).join('');
+}
+
+function togglePromo(code){
+  const p=DB.promoCodes.find(c=>c.code===code);
+  if(p){p.active=!p.active;renderPromoTable();toast(p.active?'Đã bật mã KM':'Đã tắt mã KM','success');}
+}
+
+function addPromo(){
+  const code=($('np-code').value||'').toUpperCase().trim();
+  const type=$('np-promo-type').value;
+  const discount=parseInt($('np-discount')?.value)||0;
+  const bonus=parseInt($('np-bonus')?.value)||0;
+  const limit=parseInt($('np-limit').value)||100;
+  if(!code){toast('Vui lòng nhập mã KM!','error');return;}
+  if(DB.promoCodes.find(c=>c.code===code)){toast('Mã đã tồn tại!','error');return;}
+  DB.promoCodes.push({code,discount:type==='pct'?discount:0,bonus:type==='bonus'?bonus:0,used:0,limit,active:true});
+  closeModal();renderPromoTable();
+  toast('Tạo mã KM thành công!','success');
+}
+
+function loadShopSettings(){
+  $('set-bank').value=DB.shopSettings.bank;
+  $('set-stk').value=DB.shopSettings.stk;
+  $('set-holder').value=DB.shopSettings.holder;
+  $('set-qr-url').value=DB.shopSettings.qrUrl||'';
+}
+
+function saveShopSettings(){
+  DB.shopSettings.bank=$('set-bank').value;
+  DB.shopSettings.stk=$('set-stk').value;
+  DB.shopSettings.holder=$('set-holder').value;
+  $('qr-bank-name').textContent=DB.shopSettings.bank;
+  $('qr-account').textContent='STK: '+DB.shopSettings.stk;
+  $('qr-holder').textContent='Chủ TK: '+DB.shopSettings.holder;
+  toast('Đã lưu cài đặt shop!','success');
+}
+
+function saveQR(){
+  const url=$('set-qr-url').value.trim();
+  DB.shopSettings.qrUrl=url;
+  if(url){
+    const qr=$('qr-display');
+    qr.innerHTML=`<img src="${url}" style="max-width:200px;border-radius:8px" alt="QR Code"/><div style="font-size:12px;margin-top:8px;color:var(--text-secondary)">Quét để chuyển khoản</div>`;
+    $('qr-preview').style.display='block';
+    $('qr-img').src=url;
+  }
+  toast('Đã cập nhật QR!','success');
+}
+
+function addMod(){
+  const uname=$('new-mod-user').value.trim();
+  if(!uname){toast('Vui lòng nhập tên đăng nhập!','error');return;}
+  const u=DB.users[uname];
+  if(!u){toast('Không tìm thấy tài khoản!','error');return;}
+  if(u.role==='admin'){toast('Không thể thay đổi quyền Admin!','error');return;}
+  u.role=u.role==='mod'?'user':'mod';
+  $('new-mod-user').value='';
+  toast(u.role==='mod'?`Đã phân quyền Mod cho ${uname}`:`Đã thu hồi quyền Mod của ${uname}`,'success');
+}
+
+function loadMyAcc(){
+  $('acc-name').textContent=currentUser.username;
+  $('acc-email-show').textContent=currentUser.email;
+  $('acc-role-show').textContent=currentUser.role==='admin'?'Admin':currentUser.role==='mod'?'Mod':'Thành viên';
+  $('acc-role-show').className='badge '+(currentUser.role==='admin'?'badge-red':currentUser.role==='mod'?'badge-purple':'badge-blue');
+  $('acc-balance').textContent=fmt(currentUser.balance);
+  $('acc-joined').textContent=currentUser.joined;
+  $('acc-avatar').textContent=currentUser.username[0].toUpperCase();
+}
+
+function changePw(){
+  const old=$('ch-old-pw').value;
+  const nw=$('ch-new-pw').value;
+  const nw2=$('ch-new-pw2').value;
+  if(currentUser.password!==old){toast('Mật khẩu hiện tại không đúng!','error');return;}
+  if(nw.length<6){toast('Mật khẩu mới tối thiểu 6 ký tự!','error');return;}
+  if(nw!==nw2){toast('Mật khẩu mới không khớp!','error');return;}
+  currentUser.password=nw;DB.users[currentUser.username].password=nw;
+  $('ch-old-pw').value='';$('ch-new-pw').value='';$('ch-new-pw2').value='';
+  toast('Đổi mật khẩu thành công!','success');
+}
+
+function changeEmail(){
+  const email=$('ch-email').value.trim();
+  if(!email.includes('@')){toast('Email không hợp lệ!','error');return;}
+  currentUser.email=email;DB.users[currentUser.username].email=email;
+  $('ch-email').value='';
+  loadMyAcc();
+  toast('Cập nhật Gmail thành công!','success');
+}
+
+function resetPwByEmail(){
+  const email=$('forgot-email').value.trim();
+  const u=Object.values(DB.users).find(u=>u.email===email);
+  if(!u){toast('Email không tồn tại trong hệ thống!','error');return;}
+  toast(`Đã gửi thông tin đặt lại mật khẩu đến ${email}`,'success');
+  $('forgot-email').value='';
+}
+
+function fpSubmit(){
+  const email=$('fp-email').value.trim();
+  const u=Object.values(DB.users).find(u=>u.email===email);
+  const res=$('fp-result');
+  if(!u){res.style.display='block';res.style.background='var(--bg-danger)';res.style.color='var(--text-danger)';res.textContent='Email không tồn tại!';return;}
+  res.style.display='block';res.style.background='var(--bg-success)';res.style.color='var(--text-success)';
+  res.textContent=`Mật khẩu của tài khoản "${u.username}" đã được gửi về email ${email}.`;
+}
+</script>
